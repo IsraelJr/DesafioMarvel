@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_5" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="Header" customModule="desafio_ios_israel_junior" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="w4l-FA-Nqa"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleAspectFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="415" height="100"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="headerImage" translatesAutoresizingMaskIntoConstraints="NO" id="84R-Qp-4yl">
+                    <rect key="frame" x="0.0" y="0.0" width="415" height="100"/>
+                </imageView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="84R-Qp-4yl" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="R8h-uf-P24"/>
+                <constraint firstAttribute="bottom" secondItem="84R-Qp-4yl" secondAttribute="bottom" id="Uny-tz-QRd"/>
+                <constraint firstAttribute="trailing" secondItem="84R-Qp-4yl" secondAttribute="trailing" id="arI-6c-ZQx"/>
+                <constraint firstItem="84R-Qp-4yl" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="auM-2b-dU4"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="303.62318840579712" y="-116.57608695652175"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="headerImage" width="710" height="189"/>
+    </resources>
+</document>

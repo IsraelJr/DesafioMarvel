@@ -1,0 +1,6 @@
+framework module Pods_desafio_ios_israel_juniorTests {
+  umbrella header "Pods-desafio-ios-israel-juniorTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
