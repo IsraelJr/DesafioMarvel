@@ -24,13 +24,14 @@ class HeroListInteractor: HeroListBusinessLogic
                 HeroListWorker().loadHeroesList(onComplete:
                     { [weak self] (response) in
                         self?.interactorRequestDownloadImageHero(response.data.results)
+                        
                 }) { (error) in
                     print("iasj: erro na pesquisa", error)
                 }
         }
     }
     
-    private func interactorRequestDownloadImageHero(_ listHeroes: [HeroesModels.ReponseData.InfoHeroes])
+    private func interactorRequestDownloadImageHero(_ listHeroes: [HeroModels.ReponseData.InfoHeroes])
     {
         DispatchQueue.main.async
             {

@@ -1,8 +1,8 @@
 //
-//  HeroListNetworkingWorker.swift
+//  HeroDetailHQWorker.swift
 //  desafio-ios-israel-junior
 //
-//  Created by Israel Santos Junior on 31/05/20.
+//  Created by Israel Santos Junior on 01/06/20.
 //  Copyright © 2020 Israel Santos Junior. All rights reserved.
 //
 
@@ -10,48 +10,23 @@ import Foundation
 import Alamofire
 import AlamofireImage
 
-enum ErrorWorker
-{
-    case noResponse
-    case invalidJson
-}
+typealias responseHQ       = (_ response: HeroDetailHQModels) -> ()
+typealias responseListHQs  = (_ response: [HeroDetailHQModels.ReponseData.InfoHQ.HeroDetailHQ]) -> ()
 
-enum ExtensionImageHero: String
-{
-    case JPEG   = "jpeg"
-    case JPG    = "jpg"
-    case PNG    = "png"
-    case PDF    = "pdf"
-}
-
-enum ProportionImage: String
-{
-    case PORTRAIT_SMALL      = "portrait_small"         //50 X 75px
-    case PORTRAIT_MEDIUM     = "portrait_medium"        //100 X 150px
-    case PORTRAIT_XLARGE     = "portrait_xlarge"        //150 X 225px
-    case PORTRAIT_FANTASTIC  = "portrait_fantastic"     //168 X 252px
-    case PORTRAIT_UNCANNY    = "portrait_uncanny"       //300 X 450 px
-    case PORTRAIT_INCREDIBLE = "portrait_incredible"    //216 X 324px
-    
-}
-
-typealias responseListHero  = (_ response: HeroModels) -> ()
-typealias responseHero      = (_ response: [HeroDetail]) -> ()
-
-class HeroListWorker
+class HeroDetailWorker
 {
     
-    func loadHeroesList(onComplete: @escaping (responseListHero), onError: @escaping (ErrorWorker) -> Void) {
+    func loadHQ(characterId: Int, onComplete: @escaping (responseHQ), onError: @escaping (ErrorWorker) -> Void) {
         
-        let url = urlWithHash()
+        let url = urlWithHash(to: characterId)
         
         Alamofire.request(url).responseJSON(completionHandler: { response in
             
             switch response.result {
             case .success(_):
                 do {
-                    let listHeroes = try JSONDecoder().decode(HeroModels.self, from: response.data!)
-                    onComplete(listHeroes)
+                    let listHQ = try JSONDecoder().decode(HeroDetailHQModels.self, from: response.data!)
+                    onComplete(listHQ)
                     
                 } catch  {
                     onError(.invalidJson)
@@ -65,11 +40,11 @@ class HeroListWorker
     }
     
     
-    private func urlWithHash() -> String
+    private func urlWithHash(to characterId: Int) -> String
     {
         let publickey       = "8382f4934ed198ce02de5be2600d4455"
         let privatekey      = "6773ddc7b3e40a65917ac0e900719ab15c38aadf"
-        let baseUrl         = "https://gateway.marvel.com:443/v1/public/characters?orderBy=-modified"
+        let baseUrl         = "https://gateway.marvel.com:443/v1/public/characters/\(characterId)/comics?orderBy=-modified"
         let limit           = 100
         let ts              = heroTimestamp()
         let stringToHash    = "\(String(describing: ts))\(privatekey)\(publickey)"
@@ -92,23 +67,25 @@ class HeroListWorker
     }
     
     
-    func downloadImageHero(_ listHeroes: [HeroModels.ReponseData.InfoHeroes], onComplete: @escaping (responseHero), onError: @escaping (ErrorWorker) -> Void)
+    func downloadImageHQ(_ listHeroes: [HeroDetailHQModels.ReponseData.InfoHQ], onComplete: @escaping (responseListHQs), onError: @escaping (ErrorWorker) -> Void)
     {
         let proportion = ProportionImage.PORTRAIT_UNCANNY.rawValue
-        var returnHero = [HeroDetail]()
+        var returnHero = [HeroDetailHQModels.ReponseData.InfoHQ.HeroDetailHQ]()
         
         for i in 0..<listHeroes.count
         {
             let id          = listHeroes[i].id
-            let name        = listHeroes[i].name
+            let title       = listHeroes[i].title
             let description = listHeroes[i].description
+//            let typePrice   = listHeroes[i].prices[i].type.contains(SaleType.PRINT.rawValue) ? SaleType.PRINT.rawValue : SaleType.DIGITAL.rawValue
+//            let price       = [typePrice : listHeroes[i].prices[i].price]
             let request     = "\(listHeroes[i].thumbnail.path)/\(proportion).\(ExtensionImageHero.JPG.rawValue)"
             
             Alamofire.request(request).responseImage { response in
                 
                 switch response.result {
                 case .success(let image):
-                    returnHero.append(HeroDetail(id: id, image: image, name: name, description: description))
+                    returnHero.append(HeroDetailHQModels.ReponseData.InfoHQ.HeroDetailHQ(id: id, image: image, title: title, description: description, price: listHeroes[i].prices))
                     
                     if i >= listHeroes.count-1
                     {

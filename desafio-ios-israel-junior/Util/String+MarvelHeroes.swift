@@ -24,4 +24,9 @@ extension String
             $0 + String(format: "%02x", digest[$1])
         }
     }
+    
+    func formatPriceHQ() -> String
+    {
+        return String(format: "$%.02f", self)
+    }
 }

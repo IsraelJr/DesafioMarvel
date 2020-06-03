@@ -10,14 +10,14 @@ import Foundation
 
 protocol HeroListPresentationLogic
 {
-    func presenterListHeroes(_ listHeroes: [HeroesModels.HeroCell])
+    func presenterListHeroes(_ listHeroes: [HeroDetail])
 }
 
 class HeroListPresenter: HeroListPresentationLogic
 {
     var viewController: HeroListDisplayLogic?
     
-    func presenterListHeroes(_ listHeroes: [HeroesModels.HeroCell])
+    func presenterListHeroes(_ listHeroes: [HeroDetail])
     {
         viewController?.showListHeroes(listHeroes)
     }

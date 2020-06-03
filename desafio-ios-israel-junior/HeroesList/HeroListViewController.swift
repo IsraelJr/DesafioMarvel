@@ -10,7 +10,7 @@ import UIKit
 
 protocol HeroListDisplayLogic: class
 {
-    func showListHeroes(_ listHeroes: [HeroesModels.HeroCell])
+    func showListHeroes(_ listHeroes: [HeroDetail])
     func displayFatalError()
 }
 
@@ -18,10 +18,12 @@ class HeroListViewController: UIViewController, HeroListDisplayLogic
 {
     
     @IBOutlet weak var tableHeroesList: UITableView!
+    @IBOutlet weak var indicatorLoading: UIActivityIndicatorView!
     
     var interactor: HeroListBusinessLogic?
     
-    var heroes: [HeroesModels.HeroCell]?
+    var hero:   HeroDetail?
+    var heroes: [HeroDetail]?
     
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?)
@@ -49,10 +51,19 @@ class HeroListViewController: UIViewController, HeroListDisplayLogic
         
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        if segue.destination is HeroDetailViewController {
+            let vc      = segue.destination as? HeroDetailViewController
+            vc?.hero    = sender as? HeroDetail
+            vc?.heroes  = heroes
+        }
+    }
+    
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         
         setupSelfs()
         setupLayout()
@@ -69,17 +80,29 @@ class HeroListViewController: UIViewController, HeroListDisplayLogic
     {
         tableHeroesList.backgroundColor = UIColor.white
         tableHeroesList.separatorStyle  = .none
+        
+        indicatorLoading.color          = .red
+        
+        showLoading(heroes?.count ?? 0 > 0 ? false : true)
     }
     
     private func initializeTable()
     {
-        interactor?.interactorRequestListHeroes()
+        if heroes?.count ?? 0 == 0 { interactor?.interactorRequestListHeroes() }
     }
     
-    func showListHeroes(_ listHeroes: [HeroesModels.HeroCell])
+    private func showLoading(_ show: Bool)
+    {
+        indicatorLoading.isHidden = !show
+        if show { indicatorLoading.startAnimating() } else { indicatorLoading.stopAnimating() }
+    }
+    
+    func showListHeroes(_ listHeroes: [HeroDetail])
     {
         heroes = listHeroes
+        heroes = heroes!.sorted(by: { $0.name < $1.name })
         tableHeroesList.reloadData()
+        showLoading(false)
     }
     
     func displayFatalError()
@@ -98,7 +121,7 @@ extension HeroListViewController: UITableViewDataSource
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cellHero", for: indexPath) as! HeroesTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cellHero", for: indexPath) as! HeroTableViewCell
         
         if heroes?.count ?? 0 > 0
         {
@@ -106,8 +129,6 @@ extension HeroListViewController: UITableViewDataSource
         }
         return cell
     }
-    
-    
 }
 
 
@@ -115,8 +136,9 @@ extension HeroListViewController: UITableViewDelegate
 {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        print("iasj: selecionado", indexPath.item)
+        hero = HeroDetail(id: heroes?[indexPath.row].id, image:  heroes?[indexPath.row].image, name: heroes?[indexPath.row].name, description: heroes?[indexPath.row].description)
         
+        performSegue(withIdentifier: "segueHeroDetail", sender: hero)
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath)

@@ -11,28 +11,40 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="Header" customModule="desafio_ios_israel_junior" customModuleProvider="target">
             <connections>
                 <outlet property="contentView" destination="iN0-l3-epB" id="w4l-FA-Nqa"/>
+                <outlet property="image" destination="84R-Qp-4yl" id="Lfa-lx-egD"/>
+                <outlet property="viewFooter" destination="l61-UX-CE1" id="6Pl-1Y-YdL"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleAspectFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="415" height="100"/>
+            <rect key="frame" x="0.0" y="0.0" width="415" height="116"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="headerImage" translatesAutoresizingMaskIntoConstraints="NO" id="84R-Qp-4yl">
-                    <rect key="frame" x="0.0" y="0.0" width="415" height="100"/>
+                    <rect key="frame" x="0.0" y="0.0" width="415" height="116"/>
                 </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l61-UX-CE1">
+                    <rect key="frame" x="0.0" y="96" width="415" height="32"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="32" id="K0B-93-bJU"/>
+                    </constraints>
+                </view>
             </subviews>
             <constraints>
+                <constraint firstItem="l61-UX-CE1" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="CSd-bW-FQn"/>
                 <constraint firstItem="84R-Qp-4yl" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="R8h-uf-P24"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="l61-UX-CE1" secondAttribute="trailing" id="SIv-sA-QBP"/>
                 <constraint firstAttribute="bottom" secondItem="84R-Qp-4yl" secondAttribute="bottom" id="Uny-tz-QRd"/>
                 <constraint firstAttribute="trailing" secondItem="84R-Qp-4yl" secondAttribute="trailing" id="arI-6c-ZQx"/>
                 <constraint firstItem="84R-Qp-4yl" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="auM-2b-dU4"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="l61-UX-CE1" secondAttribute="bottom" constant="-12" id="hwX-Or-BdD"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <point key="canvasLocation" x="303.62318840579712" y="-116.57608695652175"/>
+            <point key="canvasLocation" x="303.62318840579712" y="-123.09782608695653"/>
         </view>
     </objects>
     <resources>

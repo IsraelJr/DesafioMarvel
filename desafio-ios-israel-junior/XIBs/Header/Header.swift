@@ -11,7 +11,9 @@ import UIKit
 class Header: UIView
 {
     
-    @IBOutlet var contentView: UIView!
+    @IBOutlet var contentView:      UIView!
+    @IBOutlet weak var image:       UIImageView!
+    @IBOutlet weak var viewFooter:  UIView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -29,6 +31,16 @@ class Header: UIView
         bundle.loadNibNamed(String(describing: type(of: self)), owner: self, options: nil)
         addSubview(contentView)
         contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        setupLayout()
+    }
+    
+    private func setupLayout()
+    {
+        image.contentMode               = .scaleToFill
+        
+        viewFooter.backgroundColor      = UIColor.white
+        viewFooter.layer.cornerRadius   = 12
     }
     
 }
